@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .ellipsis-container-wrapper {
+            width: 200px;
+            background-color: pink;
+            overflow: hidden;
+            height: 1.3em;
+        }
+        .ellipsis-container-wrapper::after {
+            content: '';
+            clear: both;
+        }
+        .tag-item {
+            float: left;
+            flex: 0 0 auto;
+            display: inline;
+            margin-right: 5px;
+            background-color: orange;
+            padding: 0 2px;
+            line-height: 1.3em;
+            height: 1.3em;
+        }
+        .ellipsis-wrapper {
+            float: right;
+            height: 1.31em;
+            margin-top:-1.3em;
+            width:3em;
+        }
+        .ellipsis-item {
+            background-color: green;
+            width:3em;
+            height: 1.3em;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="ellipsis-container-wrapper">
+                <div
+                    v-for="tag in tags"
+                    :key="tag.id"
+                    class="tag-item"
+                    >
+                    {{tag.label}}
+                </div>
+                <div class="ellipsis-wrapper">
+                    <div class="ellipsis-item">...</div>
+                </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                tags: [
+                    {id: 1, label: '客户'},
+                    {id: 2, label: '三明治'},
+                    {id: 3, label: '四世同堂'},
+                    {id: 4, label: '金木水火土'},
+                    {id: 5, label: '金木水火土'},
+                ]
+            }
+        })
+    </script>
+</body>
+</html>

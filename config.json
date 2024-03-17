@@ -1,0 +1,22 @@
+{
+    "serve": "src",
+    "serveRedirect": false,
+    "port": 8000,
+    "bind": "localhost",
+    "watchexps": [
+        "**.html # npm run html",
+        "**.js # npm run js",
+        "*.css # # reloadcss"
+    ],
+    "interval": 500,
+    "delay": 0,
+    "proxy": "http://localhost:9999",
+    "proxypaths": [
+        "/api"
+    ],
+    "noReload": false,
+    "quiet": false,
+    "open": true,
+    "http2": false,
+    "historyindex": "/index.html"
+}
