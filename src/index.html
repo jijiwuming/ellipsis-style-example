@@ -1,56 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        :root {
+            --line-height: 1.2em;
+            --half-height: 0.6em;
+            --n-line-height: -1.2em;
+            --max-height: 1.2em;
+        }
         .ellipsis-container-wrapper {
-            width: 200px;
+            width: 259px;
             background-color: pink;
-            overflow: hidden;
-            height: 1.3em;
+            /* overflow: hidden; */
+            height: var(--max-height);
         }
-        .ellipsis-container-wrapper::after {
-            content: '';
-            clear: both;
+
+        .ellipsis-container {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            position: relative;
         }
+
         .tag-item {
-            float: left;
+            display: inline-flex;
             flex: 0 0 auto;
-            display: inline;
             margin-right: 5px;
             background-color: orange;
             padding: 0 2px;
-            line-height: 1.3em;
-            height: 1.3em;
+            line-height: var(--line-height);
+            height: var(--line-height);
         }
+
         .ellipsis-wrapper {
-            float: right;
-            height: 1.31em;
-            margin-top:-1.3em;
-            width:3em;
+            display: inline-flex;
+            height: var(--line-height);
+            width: var(--line-height);
+            justify-content: center;
+            align-items: center;
         }
+
+        .full-float-right {
+            position: absolute;
+            height: 100%;
+            top: 0;
+            width: 200%;
+        }
+
+        .full-float-right::after {
+            clear: both;
+        }
+        .left-area {
+            float: right;
+            height: var(--max-height);
+            width: calc(50% + var(--half-height));
+        }
+        .right-area {
+            float: right;
+            height: 100%;
+            width: calc(50% - var(--half-height));
+        }
+
         .ellipsis-item {
+            float: right;
+            display: inline-flex;
             background-color: green;
-            width:3em;
-            height: 1.3em;
+            width: var(--line-height);
+            height: var(--line-height);
+            margin-top: var(--n-line-height);
         }
     </style>
 </head>
+
 <body>
     <div id="app">
         <div class="ellipsis-container-wrapper">
-                <div
-                    v-for="tag in tags"
-                    :key="tag.id"
-                    class="tag-item"
-                    >
+            <div class="ellipsis-container">
+                <div class="ellipsis-wrapper">
+                    <div class="full-float-right">
+                        <div class="right-area"></div>
+                        <div class="left-area"></div>
+                        <div class="ellipsis-item">...</div>
+                    </div>
+                </div>
+                <div v-for="tag in tags" :key="tag.id" class="tag-item">
                     {{tag.label}}
                 </div>
-                <div class="ellipsis-wrapper">
-                    <div class="ellipsis-item">...</div>
-                </div>
+            </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
@@ -58,15 +99,28 @@
         var app = new Vue({
             el: '#app',
             data: {
-                tags: [
-                    {id: 1, label: '客户'},
-                    {id: 2, label: '三明治'},
-                    {id: 3, label: '四世同堂'},
-                    {id: 4, label: '金木水火土'},
-                    {id: 5, label: '金木水火土'},
-                ]
+                i:0,
+                arr: [
+                    { id: 1, label: '客户' },
+                    { id: 2, label: '三明治' },
+                    { id: 3, label: '四世同堂' },
+                    { id: 4, label: '明治' },
+                    { id: 5, label: '三明治' },
+                    { id: 6, label: '四世同堂' },
+                ],
+                tags: []
+            },
+            mounted() {
+                let len = this.arr.length;
+                this.tags = this.arr[0];
+                setInterval(()=>{
+                    let next = this.i+1;
+                    this.tags = this.arr.slice(0, next);
+                    this.i = next % len;
+                }, 500)
             }
         })
     </script>
 </body>
+
 </html>
